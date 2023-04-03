@@ -1,10 +1,29 @@
-export function List({items}: {items: string[]}) {
+export function List({title, items}: {title: string; items: string[]}) {
   return (
-    <ul>
-      {items.map(item => (
-        <li key={item}>{item}</li>
-      ))}
-    </ul>
+    <section>
+      <h2>{title}</h2>
+      <ul>
+        {items.map(item => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+export function ErrorMessage() {
+  return (
+    <div role="alert">
+      <p>Something went wrong.</p>
+    </div>
+  )
+}
+
+export function LoadingSpinner() {
+  return (
+    <div role="status">
+      <p>Loading...</p>
+    </div>
   )
 }
 

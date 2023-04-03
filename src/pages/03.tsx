@@ -7,44 +7,39 @@ import {
   LoadingSpinner,
 } from '@/lib'
 
+function useData<TData>(
+  fetcher: () => Promise<TData>,
+  initialState: TData, // 👈 Required for now, we'll fix it later
+) {
+  const [data, setData] = useState<TData>(initialState)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    setLoading(true)
+
+    fetcher()
+      .then(setData)
+      .catch(setError)
+      .finally(() => setLoading(false))
+  }, [fetcher])
+
+  return {data, loading, error, success: !loading && !error}
+}
+
 export default function App() {
-  const [players, setPlayers] = useState<string[]>([])
-  const [playersLoading, setPlayersLoading] = useState(false)
-  const [playersError, setPlayersError] = useState(null)
-
-  useEffect(() => {
-    setPlayersLoading(true)
-
-    fetchPlayers()
-      .then(setPlayers)
-      .catch(setPlayersError)
-      .finally(() => setPlayersLoading(false))
-  }, [])
-
-  const [teams, setTeams] = useState<string[]>([])
-  const [teamsLoading, setTeamsLoading] = useState(false)
-  const [teamsError, setTeamsError] = useState(null)
-
-  useEffect(() => {
-    setTeamsLoading(true)
-
-    fetchTeams()
-      .then(setTeams)
-      .catch(setTeamsError)
-      .finally(() => setTeamsLoading(false))
-  })
+  const players = useData(fetchPlayers, [])
+  const teams = useData(fetchTeams, [])
 
   return (
     <>
-      {playersLoading && <LoadingSpinner />}
-      {playersError && <ErrorMessage />}
-      {!playersLoading && !playersError && (
-        <List title="Players" items={players} />
-      )}
+      {players.loading && <LoadingSpinner />}
+      {players.error && <ErrorMessage />}
+      {players.success && <List title="Players" items={players.data} />}
 
-      {teamsLoading && <LoadingSpinner />}
-      {teamsError && <ErrorMessage />}
-      {!teamsLoading && !teamsError && <List title="Teams" items={teams} />}
+      {teams.loading && <LoadingSpinner />}
+      {teams.error && <ErrorMessage />}
+      {teams.success && <List title="Teams" items={teams.data} />}
     </>
   )
 }

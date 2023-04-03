@@ -1,10 +1,21 @@
 import {useEffect, useReducer, Reducer} from 'react'
 
-type State<TData> = {
-  status: 'loading' | 'error' | 'success'
-  error: Error | null
-  data: TData | null
-}
+type State<TData> =
+  | {
+      status: 'loading'
+      error: null
+      data: null
+    }
+  | {
+      status: 'error'
+      error: Error
+      data: null
+    }
+  | {
+      status: 'success'
+      error: null
+      data: TData
+    }
 
 type Action<TData> =
   | {type: 'loading'}
@@ -33,22 +44,15 @@ export function useData<TData>(fetcher: () => Promise<TData>) {
     {
       data: null,
       error: null,
-      status: 'loading' as const,
+      status: 'loading',
     },
   )
 
   useEffect(() => {
-    dispatch({type: 'loading'})
-
     fetcher()
       .then(data => dispatch({type: 'success', data}))
       .catch(error => dispatch({type: 'error', error}))
   }, [fetcher])
 
-  return {
-    ...state,
-    isLoading: state.status === 'loading',
-    isError: state.status === 'error',
-    isSuccess: state.status === 'success',
-  }
+  return state
 }

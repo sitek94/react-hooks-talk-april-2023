@@ -1,0 +1,90 @@
+{
+  "players": [
+    {
+      "id": "1",
+      "name": "Zinedine Zidane"
+    },
+    {
+      "id": "2",
+      "name": "Ronaldinho"
+    },
+    {
+      "id": "3",
+      "name": "Lionel Messi"
+    },
+    {
+      "id": "4",
+      "name": "Cristiano Ronaldo"
+    },
+    {
+      "id": "5",
+      "name": "Neymar Jr"
+    },
+    {
+      "id": "6",
+      "name": "Kylian Mbappe"
+    },
+    {
+      "id": "7",
+      "name": "Paul Pogba"
+    },
+    {
+      "id": "8",
+      "name": "Luka Modric"
+    },
+    {
+      "id": "9",
+      "name": "Sergio Ramos"
+    },
+    {
+      "id": "10",
+      "name": "Robert Lewandowski"
+    },
+    {
+      "id": "44iu7uy",
+      "name": "Didier Drogba"
+    }
+  ],
+  "teams": [
+    {
+      "id": "10",
+      "name": "Real Madrid"
+    },
+    {
+      "id": "11",
+      "name": "Barcelona"
+    },
+    {
+      "id": "12",
+      "name": "Bayern Munich"
+    },
+    {
+      "id": "13",
+      "name": "Juventus"
+    },
+    {
+      "id": "14",
+      "name": "Paris Saint-Germain"
+    },
+    {
+      "id": "15",
+      "name": "Manchester United"
+    },
+    {
+      "id": "16",
+      "name": "Liverpool"
+    },
+    {
+      "id": "17",
+      "name": "Chelsea"
+    },
+    {
+      "id": "18",
+      "name": "Manchester City"
+    },
+    {
+      "id": "19",
+      "name": "Tottenham Hotspur"
+    }
+  ]
+}

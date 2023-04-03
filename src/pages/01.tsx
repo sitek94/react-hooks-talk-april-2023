@@ -1,11 +1,13 @@
 import {useEffect, useState} from 'react'
-import {fetchPlayers, List} from '@/lib'
+
+import {List} from '@/lib'
+import {getPlayers, Player} from '@/api'
 
 export default function App() {
-  const [players, setPlayers] = useState<string[]>([])
+  const [players, setPlayers] = useState<Player[]>([])
 
   useEffect(() => {
-    fetchPlayers().then(setPlayers)
+    getPlayers().then(setPlayers)
   }, [])
 
   return (

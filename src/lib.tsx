@@ -1,10 +1,18 @@
-export function List({title, items}: {title: string; items: string[]}) {
+import {useState} from 'react'
+
+export function List({
+  title,
+  items,
+}: {
+  title: string
+  items: {id: string; name: string}[]
+}) {
   return (
     <section>
       <h2>{title}</h2>
       <ul>
-        {items.map(item => (
-          <li key={item}>{item}</li>
+        {items.map(({id, name}) => (
+          <li key={id}>{name}</li>
         ))}
       </ul>
     </section>
@@ -19,26 +27,45 @@ export function ErrorMessage() {
   )
 }
 
-export function LoadingSpinner() {
+export function LoadingSpinner({title}: {title?: string}) {
   return (
     <div role="status">
-      <p>Loading...</p>
+      <p>{title || 'Loading...'}</p>
     </div>
   )
 }
 
-export async function fetchPlayers() {
-  await sleep(5000)
+export function NewItemForm({
+  buttonText,
+  onSubmit,
+  placeholder,
+  isLoading,
+}: {
+  buttonText: string
+  onSubmit: (value: string) => void
+  placeholder: string
+  isLoading?: boolean
+}) {
+  const [value, setValue] = useState('')
 
-  return Array.from({length: 10}).map((_, i) => `Player ${i + 1}`)
-}
-
-export async function fetchTeams() {
-  await sleep(5000)
-
-  return Array.from({length: 10}).map((_, i) => `Team ${i + 1}`)
-}
-
-export function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms))
+  return (
+    <form
+      onSubmit={event => {
+        event.preventDefault()
+        onSubmit(value)
+        setValue('')
+      }}
+    >
+      <input
+        disabled={isLoading}
+        type="text"
+        value={value}
+        onChange={event => setValue(event.target.value)}
+        placeholder={placeholder}
+      />
+      <button disabled={isLoading} type="submit">
+        {isLoading ? 'Loading...' : buttonText}
+      </button>
+    </form>
+  )
 }

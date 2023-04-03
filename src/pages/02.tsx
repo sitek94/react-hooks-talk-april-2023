@@ -1,25 +1,27 @@
 import {useEffect, useState} from 'react'
-import {ErrorMessage, fetchPlayers, List, LoadingSpinner} from '@/lib'
+
+import {ErrorMessage, List, LoadingSpinner} from '@/lib'
+import {getPlayers, Player} from '@/api'
 
 export default function App() {
-  const [players, setPlayers] = useState<string[]>([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [players, setPlayers] = useState<Player[]>()
+  const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
 
   useEffect(() => {
-    setLoading(true)
+    setIsLoading(true)
 
-    fetchPlayers()
+    getPlayers()
       .then(setPlayers)
-      .catch(setError)
-      .finally(() => setLoading(false))
+      .catch(() => setIsError(true))
+      .finally(() => setIsLoading(false))
   }, [])
 
   return (
     <>
-      {loading && <LoadingSpinner />}
-      {error && <ErrorMessage />}
-      {!loading && !error && <List title="Players" items={players} />}
+      {isLoading && <LoadingSpinner />}
+      {isError && <ErrorMessage />}
+      {!!players && <List title="Players" items={players} />}
     </>
   )
 }

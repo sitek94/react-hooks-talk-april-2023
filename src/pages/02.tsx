@@ -19,9 +19,9 @@ export default function App() {
 
   return (
     <>
-      {isLoading && <LoadingSpinner />}
+      {isLoading && <LoadingSpinner title="Loading players..." />}
       {isError && <ErrorMessage />}
-      {!!players && <List title="Players" items={players} />}
+      {!!players && <List title="🏃 Players" items={players} />}
     </>
   )
 }

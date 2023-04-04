@@ -4,16 +4,18 @@ import {ErrorMessage, List, LoadingSpinner} from '@/lib'
 import {getPlayers} from '@/api'
 
 export default function App() {
-  const players = useQuery({
+  const {isLoading, isError, data} = useQuery({
     queryKey: ['players'],
     queryFn: getPlayers,
   })
 
-  return (
-    <>
-      {players.isLoading && <LoadingSpinner />}
-      {players.isError && <ErrorMessage />}
-      {players.isSuccess && <List title="Players" items={players.data} />}
-    </>
-  )
+  if (isLoading) {
+    return <LoadingSpinner />
+  }
+
+  if (isError) {
+    return <ErrorMessage />
+  }
+
+  return <List title="🏃 Players" items={data} />
 }

@@ -33,11 +33,11 @@ export default function App() {
     <>
       {isLoadingPlayers && <LoadingSpinner title="Loading players..." />}
       {isPlayersError && <ErrorMessage />}
-      {!!players && <List title="Players" items={players} />}
+      {!!players && <List title="🏃 Players" items={players} />}
 
       {isLoadingTeams && <LoadingSpinner title="Loading teams..." />}
       {isTeamsError && <ErrorMessage />}
-      {!!teams && <List title="Teams" items={teams} />}
+      {!!teams && <List title="🛡️ Teams" items={teams} />}
     </>
   )
 }

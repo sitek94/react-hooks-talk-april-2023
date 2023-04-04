@@ -6,12 +6,7 @@ import {addPlayer, getPlayers} from '@/api'
 export default function App() {
   const queryClient = useQueryClient()
 
-  const {
-    isLoading,
-    isError,
-    isSuccess,
-    data: players,
-  } = useQuery({
+  const {isLoading, isError, isSuccess, data} = useQuery({
     queryKey: ['players'],
     queryFn: getPlayers,
   })
@@ -27,16 +22,16 @@ export default function App() {
 
   return (
     <>
+      {isLoading && <LoadingSpinner />}
+      {isError && <ErrorMessage />}
+      {isSuccess && <List title="🏃 Players" items={data} />}
+
       <NewItemForm
         buttonText="Add Player"
         placeholder="Player Name"
         isLoading={addPlayerMutation.isLoading}
         onSubmit={name => addPlayerMutation.mutate({name})}
       />
-
-      {isLoading && <LoadingSpinner />}
-      {isError && <ErrorMessage />}
-      {isSuccess && <List title="Players" items={players} />}
     </>
   )
 }

@@ -25,7 +25,7 @@ type State<TData> =
 
 type Action<TData> =
   | {type: 'loading'}
-  | {type: 'error'; error: Error}
+  | {type: 'error'}
   | {type: 'success'; data: TData}
 
 function reducer<TData>(
@@ -66,7 +66,7 @@ export function useData<TData>(fetcher: () => Promise<TData>) {
   useEffect(() => {
     fetcher()
       .then(data => dispatch({type: 'success', data}))
-      .catch(error => dispatch({type: 'error', error}))
+      .catch(() => dispatch({type: 'error'}))
   }, [fetcher])
 
   return state

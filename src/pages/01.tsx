@@ -12,7 +12,7 @@ export default function App() {
 
   return (
     <>
-      <List title="Players" items={players} />
+      <List title="🏃 Players" items={players} />
     </>
   )
 }

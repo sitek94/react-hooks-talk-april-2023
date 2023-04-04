@@ -2,17 +2,17 @@ import {useEffect, useState} from 'react'
 
 export function useData<TData>(fetcher: () => Promise<TData>) {
   const [data, setData] = useState<TData>()
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
 
   useEffect(() => {
-    setLoading(true)
+    setIsLoading(true)
 
     fetcher()
       .then(setData)
-      .catch(() => setError(true))
-      .finally(() => setLoading(false))
+      .catch(() => setIsError(true))
+      .finally(() => setIsLoading(false))
   }, [fetcher])
 
-  return {data, loading, error}
+  return {data, isLoading, isError}
 }

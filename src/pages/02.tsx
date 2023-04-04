@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react'
-
 import {ErrorMessage, List, LoadingSpinner} from '@/lib'
 import {getPlayers, Player} from '@/api'
 

@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react'
-
 import {List} from '@/lib'
 import {getPlayers, Player} from '@/api'
 

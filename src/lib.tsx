@@ -26,7 +26,7 @@ export function List({
 
 export function ErrorMessage() {
   return (
-    <div role="alert" className="bg-red-500 text-white">
+    <div role="alert" className="bg-red-500 text-white p-4 rounded">
       <p>Something went wrong.</p>
     </div>
   )

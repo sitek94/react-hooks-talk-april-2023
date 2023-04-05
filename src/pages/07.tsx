@@ -1,37 +1,36 @@
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
+import {useQuery} from '@tanstack/react-query'
 
-import {ErrorMessage, List, LoadingSpinner, NewItemForm} from '@/lib'
-import {addPlayer, getPlayers} from '@/api'
+import {Button, ErrorMessage, List, LoadingSpinner} from '@/lib'
+import {getPlayers} from '@/api'
+import {useState} from 'react'
 
 export default function App() {
-  const queryClient = useQueryClient()
+  const [show, setShow] = useState(true)
 
-  const {isLoading, isError, isSuccess, data} = useQuery({
+  return (
+    <div>
+      <Button onClick={() => setShow(!show)}>
+        {show ? 'Hide' : 'Show'} players
+      </Button>
+
+      {show && <Players />}
+    </div>
+  )
+}
+
+function Players() {
+  const {isLoading, isError, data} = useQuery({
     queryKey: ['players'],
     queryFn: getPlayers,
   })
 
-  const addPlayerMutation = useMutation({
-    mutationFn: addPlayer,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['players'],
-      })
-    },
-  })
+  if (isLoading) {
+    return <LoadingSpinner />
+  }
 
-  return (
-    <>
-      {isLoading && <LoadingSpinner />}
-      {isError && <ErrorMessage />}
-      {isSuccess && <List title="🏃 Players" items={data} />}
+  if (isError) {
+    return <ErrorMessage />
+  }
 
-      <NewItemForm
-        buttonText="Add Player"
-        placeholder="Player Name"
-        isLoading={addPlayerMutation.isLoading}
-        onSubmit={name => addPlayerMutation.mutate({name})}
-      />
-    </>
-  )
+  return <List title="🏃 Players" items={data} />
 }
